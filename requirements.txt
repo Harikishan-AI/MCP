@@ -3,3 +3,4 @@ autogen-core
 autogen-ext
 autogen-ext[mcp]
 ngrok
+dotenv
