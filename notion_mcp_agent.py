@@ -13,25 +13,25 @@ NOTION_API_KEY = os.getenv("NOTION_API_KEY")
 model = OpenAIChatCompletionClient(
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPEN_ROUTER_API_KEY"),
-    model="arcee-ai/trinity-large-preview:free",
+    model="sourceful/riverflow-v2-fast",
     model_info={
-        "family": "arcee",
+        "family": "riverflow",
         "vision": False,
         "function_calling": True,
         "json_output": True,
         "structured_output": True,
         "multiple_system_messages": True
     },
+    request_timeout=120
 )
 
 async def config():
     params = StdioServerParams(
-        command = "npx",
-        args = ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
-        env = {
+        command="npx",
+        args=["-y", "@notion-mcp/notion-mcp"],
+        env={
             'NOTION_API_KEY': NOTION_API_KEY
         },
-        read_timeout_seconds = 20
     )
 
     mcp_tools = await mcp_server_tools(server_params=params)
@@ -66,7 +66,6 @@ async def main():
         print('-'*100)
         print(msg)
         print('-'*100)
-         
-    
-if __name__ =='__main__':
+
+if __name__ == '__main__':
     asyncio.run(main())
